@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
 
-class Profile(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField(User, related_name='friends')
     bio = models.TextField(max_length=500, blank=True)
     profile_pic = models.ImageField()
 
@@ -19,10 +20,12 @@ class Profile(models.Model):
     def get_profile_pic(self):
         return self.profile_pic
 
+
 class Post(models.Model):
+    photo = models.ImageField(upload_to='media/')
     caption = models.TextField(max_length=4000)
     title = models.TextField(max_length=50)
-    created_by = models.ForeignKey(User, null=False,)
+    created_by = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     net_likes = models.IntegerField(default=0)
 
