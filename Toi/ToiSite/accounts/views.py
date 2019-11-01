@@ -8,3 +8,6 @@ def signup(request):
             user = form.save()
             auth_login(request, user)
             return redirect('index')
+    else:
+        form = SignUpForm()
+    return render(request, 'Register.html',{'form': form})
