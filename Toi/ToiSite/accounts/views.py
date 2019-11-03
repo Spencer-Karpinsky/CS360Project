@@ -5,9 +5,10 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect('index')
+            form.save()
+            username = form.cleaned_data.get('username')
+            # auth_login(request, user)
+            return redirect('/login/')
     else:
         form = SignUpForm()
     return render(request, 'Register.html',{'form': form})
