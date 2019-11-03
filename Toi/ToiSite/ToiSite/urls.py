@@ -24,8 +24,11 @@ from accounts import views as account_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('<int:pk>/', views.index, name='index'),
+    path('', views.index, name='index'),
     path('register/', account_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='Login.html'), name='login'),
-
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

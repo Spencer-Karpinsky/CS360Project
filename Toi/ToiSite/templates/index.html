@@ -19,12 +19,12 @@
 
     <div id="mySidenav" class="sidenav">
       <a href="AccountSettings.html"><img src="img/ProfilePics/_DSC0022.jpg" alt"avatar" class="avatar"></a>
-      <a><p>Bio</p></a>
+      <a><p>{{request.user.username}}</p></a>
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="index.html">My&nbsp;Images</a>
       <a href="SharedWithMe.html">Shared&nbsp;With&nbsp;Me</a>
       <a href="AccountSettings.html">Account&nbsp;Settings</a>
-      <a href="#">Logout</a>
+      <a href="{% url 'logout' %}">Logout</a>
     </div>
 
     <!-- Header -->
@@ -34,7 +34,7 @@
     </div>
 
 
-    
+
 
     <!-- Photo Grid -->
     <div class="row">

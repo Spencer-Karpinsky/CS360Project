@@ -4,9 +4,9 @@ from django.utils.text import Truncator
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    friends = models.ManyToManyField(User, related_name='friends')
+    friends = models.ManyToManyField(User, related_name='friends', null=True)
     bio = models.TextField(max_length=500, blank=True)
-    profile_pic = models.ImageField()
+    profile_pic = models.ImageField(null=True)
 
     def __str__(self):
         return self.user.get_username()
