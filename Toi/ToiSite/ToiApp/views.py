@@ -8,9 +8,21 @@ from .models import UserProfile, Post, Post_shared_with
 @login_required
 def index(request):
     userPosts = Post.objects.filter(created_by=request.user.id)
+    return render(request, 'index.html/', {'userPosts' : userPosts})
+
+@login_required
+def sharedWithMe(request):
     shared_post_id = Post_shared_with.objects.filter(shared_id=request.user.id)
     sharedPosts = []
     for shared in shared_post_id:
             currentPost = Post.objects.filter(id=shared.post_id)
             sharedPosts.append(currentPost)
-    return render(request, 'index.html/', {'userPosts' : userPosts, 'sharedPosts' : sharedPosts})
+    return render(request, 'SharedWithMe.html', {'sharedPosts' : sharedPosts})
+
+@login_required
+def viewPost(request, pk):
+    pass
+
+@login_required
+def viewProfile(request,pk):
+    pass
