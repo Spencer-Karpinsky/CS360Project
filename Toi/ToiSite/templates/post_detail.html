@@ -1,0 +1,13 @@
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2">{{ object.created_by }}</a>
+          <small class="text-muted ">{{ object.created_at }}</small>
+        </div>
+        <!-- printing differnt instances of the post object -->
+        <h2 class="article-title">{{ object.title }}</h2>
+        <p class="article-content">{{ object.caption }}</p>
+        <img src="{{object.photo.url}}" alt="">
+    </article>
+{% endblock content %}

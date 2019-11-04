@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
+from django.urls import reverse
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -30,7 +31,7 @@ class Post(models.Model):
     net_likes = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.title + "- Created By: " + self.created_by
+        return self.title + "- Created By: " + self.created_by.username
 
     def get_title(self):
         return self.title
@@ -43,6 +44,9 @@ class Post(models.Model):
 
     def get_creator(self):
         return self.created_by
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
 class Post_shared_with(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
