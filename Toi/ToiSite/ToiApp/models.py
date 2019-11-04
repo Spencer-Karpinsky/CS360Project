@@ -2,15 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
 from django.urls import reverse
+from PIL import Image
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     friends = models.ManyToManyField(User, related_name='friends', null=True)
     bio = models.TextField(max_length=500, blank=True)
     profile_pic = models.ImageField(null=True)
 
     def __str__(self):
-        return self.user.get_username()
+        return f'{self.user.username} Profile'
 
     def get_bio(self):
         return self.bio
@@ -20,6 +21,13 @@ class UserProfile(models.Model):
 
     def get_profile_pic(self):
         return self.profile_pic
+
+    def save(self, **kwargs):#resize images for profile pictures
+        super().save()
+        pic = Image.open(self.profile_pic.path)
+        output_size = (250,250)
+        pic.thumbnail(output_size)
+        pic.save(self.profile_pic.path)
 
 
 class Post(models.Model):

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
-from .forms import PostForm
+from .forms import PostForm, updateUser, updateProfile
 from .models import UserProfile, Post, Post_shared_with
 from django.views.generic import CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,6 +20,25 @@ def sharedWithMe(request):
             currentPost = Post.objects.filter(id=shared.post_id)
             sharedPosts.append(currentPost)
     return render(request, 'SharedWithMe.html', {'sharedPosts' : sharedPosts})
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = updateUser(request.POST, instance=request.user)
+        p_form = updateProfile(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('profile')#to avoid the post/get redirect pattern and sends get request
+    else: #when new data is submitted
+        u_form = updateUser(instance=request.user)
+        p_form = updateProfile(instance=request.user.profile)
+
+    context={
+        'u_form':u_form,
+        'p_form':p_form
+    }
+    return render(request, 'profile.html', context)
 
 @login_required
 def viewPost(request, pk):
@@ -41,4 +60,3 @@ class PostCreate(LoginRequiredMixin, CreateView):
 class PostDetail(DetailView):
     model = Post
     template_name = 'post_detail.html'
-    
