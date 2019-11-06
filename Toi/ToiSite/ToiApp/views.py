@@ -4,13 +4,13 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
 from .forms import PostForm, updateUser, updateProfile
 from .models import UserProfile, Post, Post_shared_with
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def register(request):
     return render(request, 'Register.html')
-    
+
 @login_required
 def index(request):
     userPosts = Post.objects.filter(created_by=request.user.id)
@@ -64,3 +64,11 @@ class PostCreate(LoginRequiredMixin, CreateView):
 class PostDetail(DetailView):
     model = Post
     template_name = 'post_detail.html'
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'index.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.filter(created_by=self.request.user)
