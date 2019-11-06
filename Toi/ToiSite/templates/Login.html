@@ -13,11 +13,10 @@
   </head>
   <body>
     <div class="topnav" id="myTopnav">
-      <a><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></a>
-      <img src="img/Logo_transparentWhite.png" height="40px" width="53px">
-      <a href="javascript:void(0);" class="icon"onclick="nav()"></a>
+      <a href="{% url 'index' %}" style="float:left"><img src="img/Logo_transparentWhite.png" height="40px" width="53px"></a>
     </div>
-
+<br>
+<br><br><br>
     <form method="post">
   <div class="imgcontainer">
     <img src="Logo_text_transparentWhite" alt="Avatar" class="avatar">
@@ -26,16 +25,13 @@
   <div class="container">
     {% csrf_token %}
     {{ form }}
-    <label for="forgotuser"><b>Forgot your <a href="#">username?</a></b></label>
-
     <button type="submit">Login</button>
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
   </div>
-
-  <div class="container" style="background-color:#f1f1f1">
-    <span class="psw">Forgot <a href="#">password?</a></span>
+  <div class="container signin">
+    <p>Need an account? <a href="{% url 'register' %}">Create One</a>.</p>
   </div>
 </form>
 

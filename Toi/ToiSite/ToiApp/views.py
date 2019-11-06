@@ -7,6 +7,10 @@ from .models import UserProfile, Post, Post_shared_with
 from django.views.generic import CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
+def register(request):
+    return render(request, 'Register.html')
+    
 @login_required
 def index(request):
     userPosts = Post.objects.filter(created_by=request.user.id)
