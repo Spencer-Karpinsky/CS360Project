@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 @login_required
 def index(request):
     userPosts = Post.objects.filter(created_by=request.user.id)
-    return render(request, 'index.html/', {'userPosts' : userPosts})
+    return render(request, 'index.html', {'userPosts' : userPosts})
 
 @login_required
 def sharedWithMe(request):
