@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><br><br>
+  <div id="main">
+    <div class="content-section">
+      {% for friend in friends %}
+        <p>{{friend}}</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

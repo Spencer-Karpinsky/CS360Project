@@ -27,11 +27,21 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('sharedWithMe', views.sharedWithMe, name='sharedWithMe'),
     path('register/', account_views.signup, name='signup'),
+    path('friends/', views.friends, name='friends'),
     path('login/', auth_views.LoginView.as_view(template_name='Login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', include('ToiApp.urls')),
 
 ]
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
 
+        # For django versions before 2.0:
+        # url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns
+    
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

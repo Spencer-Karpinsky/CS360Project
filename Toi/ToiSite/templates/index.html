@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
   {% block content %}
-    <!-- Header -->
     <div id="main">
     <div class="header">
       <h1>My Images</h1>
     </div>
+    <div class="row">
       {% for post in posts %}
-        {{ post.created_by}}
-        
-          <img src="{{post.photo.url}}" alt="">
+        <div class="column">
+          <a href="{% url 'post-detail' post.id %}"> <img src="{{post.photo.url}}" alt=""></a>
+        </div>
       {% endfor %}
     </div>
-
+    </div>
   {% endblock %}

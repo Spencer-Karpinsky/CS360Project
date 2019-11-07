@@ -5,8 +5,15 @@
     <div class="header">
       <h1>Shared With Me</h1>
     </div>
+    <div class="row">
+      {% for post in sharedPosts %}
+        {% for post2 in post %}
+          <div class="column">
+            <a href="{% url 'post-detail' post2.id %}"><img src="{{post2.photo.url}}" alt=""></a>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
 
-    <!-- Photo Grid -->
-    
     </div>
   {% endblock %}

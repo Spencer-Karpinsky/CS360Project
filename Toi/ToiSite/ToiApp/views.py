@@ -21,9 +21,15 @@ def sharedWithMe(request):
     shared_post_id = Post_shared_with.objects.filter(shared_id=request.user.id)
     sharedPosts = []
     for shared in shared_post_id:
-            currentPost = Post.objects.filter(id=shared.post_id)
+            currentPost = Post.objects.filter(id=shared.post_id.id)
             sharedPosts.append(currentPost)
     return render(request, 'SharedWithMe.html', {'sharedPosts' : sharedPosts})
+
+@login_required
+def friends(request):
+    userProfile = UserProfile.objects.get(user=request.user.id)
+    friends = userProfile.friends.all()
+    return render(request, 'friends.html', {'friends' : friends})
 
 @login_required
 def profile(request):
@@ -44,13 +50,6 @@ def profile(request):
     }
     return render(request, 'profile.html', context)
 
-@login_required
-def viewPost(request, pk):
-    pass
-
-@login_required
-def viewProfile(request,pk):
-    pass
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
@@ -72,3 +71,5 @@ class PostListView(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(created_by=self.request.user)
+
+

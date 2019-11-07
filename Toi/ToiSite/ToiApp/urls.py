@@ -9,5 +9,6 @@ urlpatterns = [
     path('post/<int:pk>/', PostDetail.as_view(), name='post-detail'),
     path('profile/', views.profile, name='profile'),
     path('index', PostListView.as_view(), name='index'),
+    
 
 ]

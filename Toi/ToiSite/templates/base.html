@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html>
   <head>
     <script src="../static/js/script.js"></script>
@@ -8,27 +8,29 @@
     <link rel="stylesheet" type="text/css" href="materialize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block stylesheet %} {% endblock %}
+
   </head>
   <body>
     {% block body %}
     <div class="topnav" id="myTopnav">
       <a><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></a>
-      <a href="{% url 'index' %}" style="float:left"><img src="media/img/Logo_transparentWhite.png" height="40px" width="53px"></a>
+      <a href="{% url 'index' %}" style="float:left"><img src="../media/img/Logo_transparentWhite.png" height="40px" width="53px"></a>
       <a href="javascript:void(0);" class="icon"onclick="nav()"></a>
     </div>
 
     <div id="mySidenav" class="sidenav">
-      <p>{{request.user.username}}</p>
-      <a href="AccountSettings.html"><img src="{{ user.profile.profile_pic.url }}" alt"avatar" class="avatar"></a>
+      <a href="{% url 'profile' %}"><img src="{{ user.profile.profile_pic.url }}" alt"avatar" class="avatar"></a>
       <p>{{request.user.username}}</p>
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="{% url 'index' %}">My&nbsp;Images</a>
       <a href="{% url 'sharedWithMe' %}">Shared&nbsp;With&nbsp;Me</a>
       <a href="{% url 'post-create' %}">Upload&nbsp;Photo</a>
       <a href="{% url 'profile' %}">My&nbsp;Profile</a>
+      <a href="{% url 'friends' %}">My&nbsp;Friends</a>
       <a href="{% url 'logout' %}">Logout</a>
     </div>
     {% block content %}
     {% endblock %}
+
     {% endblock body %}
 </html>
