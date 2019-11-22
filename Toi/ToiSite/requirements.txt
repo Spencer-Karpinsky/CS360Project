@@ -1,0 +1,4 @@
+django
+gunicorn
+django-debug-toolbar
+pillow
