@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: ./start.sh
-    image: django-server
+    image: http-server
     stdin_open: true
     tty: true
     volumes:
