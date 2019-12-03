@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+  {% block content %}
+  <body>
+    <div id="main">
+    <div class="header">
+      <h1>{{targetUser.username}}</h1>
+    </div>
+    <div class="row">
+      {% for post in posts %}
+        <div class="column">
+          <a href="{% url 'post-detail' post.id %}"> <img src="{{post.photo.url}}" alt=""></a>
+        </div>
+      {% endfor %}
+    </div>
+    </div>
+    </body>
+  {% endblock %}

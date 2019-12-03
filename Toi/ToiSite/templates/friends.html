@@ -5,9 +5,12 @@
   <div id="main">
     <div class="content-section">
       {% for friend in friends %}
-        <p>{{friend}}</p>
+        <a href="{% url 'view_profile' friend.id %}"><p>{{friend}}</p></a>
       {% endfor %}
     </div>
+  </div>
+  <div class="container">
+    <a href="{% url 'addFriends' %}">Add More Friends</a>
   </div>
 </body>
 {% endblock %}

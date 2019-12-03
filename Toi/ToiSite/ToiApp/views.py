@@ -6,7 +6,7 @@ from .forms import PostForm, updateUser, updateProfile
 from .models import UserProfile, Post, Post_shared_with
 from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.models import User
 
 def register(request):
     return render(request, 'Register.html')
@@ -26,10 +26,50 @@ def sharedWithMe(request):
     return render(request, 'SharedWithMe.html', {'sharedPosts' : sharedPosts})
 
 @login_required
+def shareableUsers(request, pk):
+    targetPost = Post.objects.get(id=pk)
+    userProfile = UserProfile.objects.get(user=request.user.id)
+    friends = userProfile.friends.all()
+    return render(request, 'shareableUsers.html', {'friends': friends, 'targetPost': targetPost})
+
+
+@login_required
+def sharePost(request, pk, post_pk):
+    sharedByUser = request.user
+    targetUser = User.objects.get(id=pk)
+    targetPost = Post.objects.get(id=post_pk)
+    shared_relation  = Post_shared_with(post_id=targetPost,shared_id=targetUser)
+    shared_relation.save()
+    response = redirect('/index')
+    return response
+
+@login_required
+def addFriends(request):
+    currentProfile = UserProfile.objects.get(user=request.user.id)
+    currentFriends = currentProfile.friends.all()
+    addableUsers = User.objects.all().exclude(id__in=currentFriends)
+    return render(request, 'addFriends.html', {'addableUsers': addableUsers})
+
+@login_required
+def addFriend(request, pk):
+    targetUser = User.objects.get(id=pk)
+    userProfile = UserProfile.objects.get(user=request.user.id)
+    userProfile.friends.add(targetUser)
+    response = redirect('/friends')
+    return response
+
+@login_required
 def friends(request):
     userProfile = UserProfile.objects.get(user=request.user.id)
     friends = userProfile.friends.all()
     return render(request, 'friends.html', {'friends' : friends})
+
+@login_required
+def view_profile(request,pk):
+    targetUser = User.objects.get(id=pk)
+    posts = Post.objects.filter(created_by=pk)
+    return render(request, 'view_profile.html', {'targetUser': targetUser, 'posts': posts})
+
 
 @login_required
 def profile(request):

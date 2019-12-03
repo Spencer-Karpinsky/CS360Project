@@ -9,6 +9,9 @@ urlpatterns = [
     path('post/<int:pk>/', PostDetail.as_view(), name='post-detail'),
     path('profile/', views.profile, name='profile'),
     path('index', PostListView.as_view(), name='index'),
-    
-
+    path('view_profile/<int:pk>', views.view_profile, name='view_profile'),
+    path('sharableUsers/<int:pk>', views.shareableUsers, name='shareableUsers'),
+    path('sharePost/<int:pk>/<int:post_pk>', views.sharePost, name='sharePost'),
+    path('addFriends/', views.addFriends, name='addFriends'),
+    path('addFriend/<int:pk>', views.addFriend, name='addFriend'),
 ]
