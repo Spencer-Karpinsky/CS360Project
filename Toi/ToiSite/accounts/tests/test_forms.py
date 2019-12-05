@@ -17,4 +17,4 @@ class User_Form_Test(TestCase):
     def test_UserForm_invalid(self):
         form = SignUpForm(data={'username':"",'email':"toi.com",
         'password1':"jumpman23", 'password2':"jumpman23!", 'first_name':"Testin", 'last_name':"er"})
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())

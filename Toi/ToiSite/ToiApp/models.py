@@ -6,7 +6,7 @@ from PIL import Image
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    friends = models.ManyToManyField(User, related_name='friends', null=True)
+    friends = models.ManyToManyField(User, related_name='friends')
     bio = models.TextField(max_length=500, blank=True)
     profile_pic = models.ImageField(null=True, upload_to='profile_pics', default='../media/img/ToiColors.JPG')
 
@@ -31,7 +31,7 @@ class UserProfile(models.Model):
 
 
 class Post(models.Model):
-    photo = models.ImageField(upload_to='media/')
+    photo = models.ImageField(upload_to='media/',null=True)
     caption = models.TextField(max_length=4000)
     title = models.TextField(max_length=50)
     created_by = models.ForeignKey(User, null=False, on_delete=models.CASCADE)

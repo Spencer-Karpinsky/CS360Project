@@ -3,6 +3,7 @@ from .views import PostCreate, PostDetail, PostListView
 from . import views
 from accounts import views as account_views
 urlpatterns = [
+    path('', views.PostListView.as_view(), name='index'),
     path('register', account_views.signup, name='register'),
     # path('index', views.index, name='index'),
     path('post/new', PostCreate.as_view(), name='post-create'),
